@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
-import argparse
+from modules import blur
+from modules import mythresholding
+from modules import gradient
+from modules import edge_detection
 
 def getShape(image):
     return (image.shape[1], image.shape[0])
@@ -35,3 +38,33 @@ def flip(image, flipCode=1):
 
 def crop(image, width1, width2, height1, height2):
     return image[height1:height2, width1:width2]
+
+def AverageBlur(image, K):
+    return blur.AverageBlur(image, K)
+
+def GaussianBlur(image, K):
+    return blur.GaussianBlur(image, K)
+
+def MedianBlur(image, K):
+    return blur.MedianBlur(image, K)
+
+def BilateralBlur(image, K, C, S):
+    return blur.BilateralBlur(image, K, C, S)
+
+def thresholding(image, inv=False):
+    return mythresholding.thresholding(image, inv)
+
+def adaptivethresholding(image, K, C, inv=False, method="gaussian"):
+    return mythresholding.adaptiveThresholding(image, K, C, inv, method)
+
+def getGradientSobel(image):
+    return gradient.getGradientSobel(image)
+
+def getGradientLaplacian(image):
+    return gradient.getGradientLaplacian(image)
+
+def canny(image, K=5, lower=30, upper=150):
+    return edge_detection.canny(image, K, lower, upper)
+
+def auto_canny(image, sigma=0.33):
+    return edge_detection.auto_canny(image, sigma)
