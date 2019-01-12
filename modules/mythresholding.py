@@ -2,17 +2,17 @@ import cv2
 import mahotas
 
 def thresholding(image, inv=False):
-    grayscale = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh_type = cv2.THRESH_BINARY
     if inv:
         thresh_type = cv2.THRESH_BINARY_INV
     
     T = mahotas.otsu(grayscale)
-    (_, thresh) = cv2.threshold(grayscale, T, 255, thresh_type)
+    thresh = cv2.threshold(grayscale, T, 255, thresh_type)[1]
     return thresh
 
 def adaptiveThresholding(image, K, C, inv=False, method="gaussian"):
-    grayscale = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh_type = cv2.THRESH_BINARY
     adaptive_method = cv2.ADAPTIVE_THRESH_GAUSSIAN_C
     if inv:

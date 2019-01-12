@@ -22,12 +22,12 @@ def rotation(image, degrees, scale=1.0):
     return rotated
 
 def resize(image, width=None, height=None, inter=cv2.INTER_AREA):
-    if width is not None and height is not None:
+    if width is None and height is None:
         return image
-    if width is not None:
+    if width is not None and height is None:
         r = width / image.shape[1]
         height = int(image.shape[0] * r)
-    else:
+    elif height is not None and width is None:
         r = height / image.shape[0]
         width = int(image.shape[1] * r)
         
@@ -54,7 +54,29 @@ def BilateralBlur(image, K, C, S):
 def thresholding(image, inv=False):
     return mythresholding.thresholding(image, inv)
 
-def adaptivethresholding(image, K, C, inv=False, method="gaussian"):
+def adaptiveThresholding(image, K, C, inv=False, method="gaussian"):
+    """
+    Apply the method Adaptive Thresholding in Image
+
+    Parameters
+    ----------
+    image : array
+        The image 
+    K : integer
+        Neighborhood Size
+    C : integer
+        Integer that is subtracted from the mean
+    inv: boolean
+        Invert thresholded image colors
+    method: str
+        Method that will be used in the thresholding
+    
+    Returns
+    -------
+    ndarray
+        Thresholded Image
+    """
+
     return mythresholding.adaptiveThresholding(image, K, C, inv, method)
 
 def getGradientSobel(image):
